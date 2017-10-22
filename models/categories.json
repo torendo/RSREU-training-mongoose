@@ -1,0 +1,6 @@
+[
+  {"id": 1, "title": "Must Read Titles", "type": "must_read", "color": "#ff517e"},
+  {"id": 2, "title": "Best Of List", "type": "best", "color": "#ffb700"},
+  {"id": 3, "title": "Classic Novels", "type": "classic", "color": "#03bedf"},
+  {"id": 4, "title": "Non Fiction", "type": "non_fiction", "color": "#847ede"}
+]

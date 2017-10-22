@@ -1,0 +1,6 @@
+[
+  {"id": 1, "title": "All Books", "type": "all", "active": true},
+  {"id": 2, "title": "Most Recent", "type": "recent", "active": false},
+  {"id": 3, "title": "Most Popular", "type": "popular", "active": false},
+  {"id": 4, "title": "Free Books", "type": "free", "active": false}
+]

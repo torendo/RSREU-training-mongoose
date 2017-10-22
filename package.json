@@ -1,0 +1,27 @@
+{
+  "name": "rsreu-lab",
+  "version": "2.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "consolidate": "^0.14.5",
+    "express": "^4.14.0",
+    "library-ui": "git+https://github.com/ifedyukin/RSREU-training_UI.git",
+    "mongodb": "^2.2.31",
+    "mustache": "^2.3.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  },
+  "devDependencies": {
+    "cross-env": "^5.0.5",
+    "react-scripts": "1.0.13"
+  }
+}

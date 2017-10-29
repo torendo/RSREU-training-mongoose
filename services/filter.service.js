@@ -1,7 +1,9 @@
-const filterCol = require('../db/index').getCollection('filters');
+const mongoose = require('mongoose');
+const filtersSchema = require('../schemas/filters.schema');
+const Filter = mongoose.model('filter', filtersSchema);
 
 module.exports = {
   getAllFilters(callback) {
-    return filterCol.find({}).toArray(callback);
+    return Filter.find({}, callback);
   }
 };

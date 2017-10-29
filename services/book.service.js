@@ -1,9 +1,11 @@
 const ObjectID = require('mongodb').ObjectID;
-const bookCol = require('../db/index').getCollection('books');
+const mongoose = require('mongoose');
+const booksSchema = require('../schemas/books.schema');
+const Book = mongoose.model('book', booksSchema);
 
 const service = {
   getAllBooks(callback) {
-    return bookCol.find({}).toArray(callback);
+    return Book.find({}, callback);
   },
 
   createBook(book, callback) {
@@ -13,18 +15,18 @@ const service = {
       updatedAt: book.updatedAt || Date.now()
     };
 
-    return bookCol.insertOne(bookData, callback);
+    return Book.create(bookData, callback);
   },
 
   updateBook(book, callback) {
     const _id = ObjectID(book._id);
     const newBookData = {...book, _id};
 
-    return bookCol.update({_id}, newBookData, callback);
+    return Book.update({_id}, newBookData, callback);
   },
 
   deleteBook(_id, callback) {
-    return bookCol.remove({_id: ObjectID(_id)}, callback);
+    return Book.remove({_id: ObjectID(_id)}, callback);
   }
 };
 

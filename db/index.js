@@ -2,10 +2,13 @@ const MongoClient = require('mongodb').MongoClient;
 let _db;
 
 module.exports = {
-  connect(url) {
-    return MongoClient.connect(url)
-      .then(db => (_db = db))
-      .catch(err => Promise.reject(err));
+  connect(url, callback) {
+    MongoClient.connect(url, (err, database) => {
+      if (!err) {
+        _db = database;
+      }
+      callback(err, database);
+    });
   },
 
   getInstance() {
@@ -17,5 +20,5 @@ module.exports = {
 
   getCollection(name) {
     return this.getInstance().collection(name);
-  }
+  },
 };

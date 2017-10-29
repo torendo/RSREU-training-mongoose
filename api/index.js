@@ -6,69 +6,77 @@ const filterService = require('../services/filter.service');
 
 router
   .get('/categories', (req, res) => {
-    categoryService
-      .getAllCategories()
-      .then(data => res.send(data))
-      .catch(err => res.send(err));
+    categoryService.getAllCategories((err, categories) => {
+      if (err) {
+        console.error(err);
+        return res.send(err);
+      }
+
+      return res.send(categories);
+    });
   })
   .get('/filters', (req, res) => {
-    filterService
-      .getAllFilters()
-      .then(data => res.send(data))
-      .catch(err => res.send(err));
+    filterService.getAllFilters((err, filters) => {
+      if (err) {
+        console.error(err);
+        return res.send(err);
+      }
+
+      return res.send(filters);
+    });
   })
   .get('/books', (req, res) => {
     const {search, activeFilter, activeCategory} = req.query;
 
-    bookService
-      .getAllBooks()
-      .then(books => {
+    bookService.getAllBooks((err, books) => {
+      if (err) {
+        console.error(err);
+        return res.send(err);
+      }
+
+      const requiredBooks = books.filter(book =>
+        meetQuery(book, search, activeFilter, activeCategory));
+
+      return res.send(requiredBooks);
+    });
+  })
+  .post('/book', (req, res) => {
+    const action = req.body.action;
+    const {search, activeFilter, activeCategory} = req.body;
+
+    const getAllBooksCallback = (err, cursor) => {      
+      if (err) {
+        console.error(err);
+        return res.send(err);
+      }
+
+      bookService.getAllBooks((err, books) => {
+        if (err) {
+          console.error(err);
+          return res.send(err);
+        }
+
         const requiredBooks = books.filter(book =>
           meetQuery(book, search, activeFilter, activeCategory));
 
         return res.send(requiredBooks);
-      })
-      .catch(err => res.send(err));
-  })
-  .post('/book', (req, res) => {
-    const {
-      search,
-      activeFilter,
-      activeCategory,
-      _id,
-      action,
-      rating,
-      book,
-    } = req.body;
-
-    let dbQuery;
+      });
+    };
 
     switch (action) {
       case 'create': {
-        dbQuery = bookService.createBook(book);
-        break;
+        const {book} = req.body;
+        return bookService.createBook(book, getAllBooksCallback);
       }
       case 'update': {
-        dbQuery = bookService.updateBook(_id, rating);
-        break;
+        const {book} = req.body;
+        return bookService.updateBook(book, getAllBooksCallback);
       }
       case 'delete': {
-        dbQuery = bookService.deleteBook(_id);
-        break;
+        const {_id} = req.body;
+        return bookService.deleteBook(_id, getAllBooksCallback);
       }
     }
-
-    dbQuery.then(data =>
-      bookService
-        .getAllBooks()
-        .then(data => {
-          const requiredBooks = data.filter(book =>
-            meetQuery(book, search, activeFilter, activeCategory));
-
-          return res.send(requiredBooks);
-        })
-        .catch(err => res.send(err)),
-    );
   });
 
 module.exports = router;

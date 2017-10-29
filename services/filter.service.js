@@ -1,8 +1,7 @@
-const filterCol = require('../db/index')
-  .getCollection('filters');
+const filterCol = require('../db/index').getCollection('filters');
 
 module.exports = {
-  getAllFilters() {
-    return filterCol.find({}).toArray();
+  getAllFilters(callback) {
+    return filterCol.find({}).toArray(callback);
   }
 };

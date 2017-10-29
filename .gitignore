@@ -1,4 +1,6 @@
 .vscode
+.idea
+.DS_Store
 node_modules
-public
-.idea/
+mongo_data
+build

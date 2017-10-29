@@ -2,7 +2,7 @@ function meetQuery(book, search, filter, category) {
   const expectations = [
     meetFilter(filter),
     meetSearch(search),
-    meetCategory(category),
+    meetCategory(category)
   ];
 
   return expectations.filter(f => f(book)).length === expectations.length;
@@ -40,7 +40,7 @@ function meetFilter(filterType) {
 }
 
 function meetSearch(queryString) {
-  return ({title = '', firstName = '', lastName = ''}) =>
+  return ({title = '', author: {firstName = '', lastName = ''}}) =>
     queryString
       ? title.includes(queryString) ||
         firstName.includes(queryString) ||

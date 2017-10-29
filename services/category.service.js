@@ -1,8 +1,7 @@
-const categoryCol = require('../db/index')
-  .getCollection('categories');
+const categoryCol = require('../db/index').getCollection('categories');
 
 module.exports = {
-  getAllCategories() {
-    return categoryCol.find({}).toArray();
+  getAllCategories(callback) {
+    return categoryCol.find({}).toArray(callback);
   }
 };

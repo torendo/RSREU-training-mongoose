@@ -64,7 +64,7 @@ const Schema = mongoose.Schema;
 
 const booksSchema = new Schema({
   title:  String
-  ...опишите остальные поля самостоятельно
+  //опишите остальные поля самостоятельно
 });
 
 module.exports = booksSchema;
